@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Response Evaluator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>LLM Response Evaluator</h1>
+    <p class="sub">Side-by-side scoring of AI model responses against a rubric, with written rationale and export.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="row-between">
+        <h2>1. Task</h2>
+        <button type="button" id="loadSample" class="ghost">Load sample task</button>
+      </div>
+      <label for="prompt">Prompt given to the model</label>
+      <textarea id="prompt" rows="3" placeholder="Paste the user prompt / instructions here"></textarea>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Response A</h2>
+        <textarea id="respA" rows="8" placeholder="Paste Response A"></textarea>
+        <div class="scores" data-side="A"></div>
+        <div class="flags" data-side="A"></div>
+        <p class="total">Total: <span id="totalA">0</span> / 25</p>
+      </div>
+      <div class="card">
+        <h2>Response B</h2>
+        <textarea id="respB" rows="8" placeholder="Paste Response B"></textarea>
+        <div class="scores" data-side="B"></div>
+        <div class="flags" data-side="B"></div>
+        <p class="total">Total: <span id="totalB">0</span> / 25</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Preference &amp; rationale</h2>
+      <div id="preference" class="pref"></div>
+      <label for="rationale">Rationale (explain the specific reasons for your choice)</label>
+      <textarea id="rationale" rows="4" placeholder="e.g. A follows the 3-bullet constraint; B invents a statistic in paragraph 2 (hallucination)..."></textarea>
+      <div id="warnings" class="warnings" aria-live="polite"></div>
+      <div class="row">
+        <button type="button" id="save">Save evaluation</button>
+        <button type="button" id="reset" class="ghost">Clear form</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row-between">
+        <h2>3. Saved evaluations (<span id="count">0</span>)</h2>
+        <div class="row">
+          <button type="button" id="exportJson" class="ghost">Export JSON</button>
+          <button type="button" id="exportCsv" class="ghost">Export CSV</button>
+          <button type="button" id="clearAll" class="ghost danger">Delete all</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Prompt</th><th>A</th><th>B</th><th>Preference</th><th>Flags</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>Built by Jaden Littlefield-Davis · Data stays in your browser (localStorage).</footer>
+  <script src="app.js"></script>
+</body>
+</html>
